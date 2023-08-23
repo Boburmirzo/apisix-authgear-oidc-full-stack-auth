@@ -1,0 +1,40 @@
+version: "3"
+services:
+  apisix:
+    image: apache/apisix:latest
+    volumes:
+      - ./apisix/config.yml:/usr/local/apisix/conf/config.yaml:ro
+      - ./apisix/apisix.yml:/usr/local/apisix/conf/apisix.yaml:ro
+    ports:
+      - "9080:9080"
+    environment:
+      - GATEWAY_PORT=9080
+      - AUTHGEAR_CLIENT_ID=${CLIENT_ID}
+      - AUTHGEAR_CLIENT_SECRET=${CLIENT_SECRET}
+      - AUTHGEAR_ISSUER=${ISSUER}
+      - AUTHGEAR_REDIRECT_URI=${REDIRECT_URI}
+
+  backend:
+    image: nginx:1.19.0-alpine
+    restart: always
+    volumes:
+      - ./backend/backend.conf:/etc/nginx/nginx.conf
+    ports:
+      - "9081:80/tcp"
+    environment:
+      - NGINX_PORT=80
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - GATEWAY_PORT=9080
+      - AUTHGEAR_CLIENT_ID=${CLIENT_ID}
+      - AUTHGEAR_CLIENT_SECRET=${CLIENT_SECRET}
+      - AUTHGEAR_ISSUER=${ISSUER}
+      - AUTHGEAR_REDIRECT_URI=${REDIRECT_URI}  
+    

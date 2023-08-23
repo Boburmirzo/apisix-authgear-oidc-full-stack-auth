@@ -1,0 +1,21 @@
+upstreams:
+  - name: "example upstream"
+    id: 1
+    type: roundrobin
+    nodes:
+      "backend:80": 1
+routes:
+  - name: "protected_route"
+    uri: /protected
+    method: GET
+    upstream_id: 1
+    plugins:
+      openid-connect:
+        client_id: ${{AUTHGEAR_CLIENT_ID}}
+        client_secret: ${{AUTHGEAR_CLIENT_SECRET}}
+        discovery: "${{AUTHGEAR_ISSUER}}/.well-known/openid-configuration"
+        scope: "openid"
+        use_jwks: true
+        bearer_only: true
+        redirect_uri: ${{AUTHGEAR_REDIRECT_URI}}
+#END
