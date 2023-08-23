@@ -13,7 +13,7 @@ For the demo, we used Docker to install and run 3 components (backend, API Gatew
 Before you begin, you'll need the following:
 
 - A **free Authgear account**. [Sign up](https://oursky.typeform.com/to/S5lvI8rN) if you don't have one already.
-- **Configure an application in Authgear**. If you don't have any applications that use Authgear, you can create a new Authgear OIDC Client application by following the this guide.
+- **Configure an application in Authgear**. If you don't have any applications that use Authgear, you can create a new Authgear OIDC Client application by following this [guide](https://docs.authgear.com/how-to-guide/authenticate/oidc-provider#setting-up-authgear-in-the-portal).
 - [Docker](https://docs.docker.com/get-docker/) is used to install all services.
 
 Start by cloning the project into your local machine:
